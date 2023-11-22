@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ./demo-magic/demo-magic.sh -n
+. ./demo-magic.sh -n
 
 DEMO_PROMPT="${GREEN}➜ ${CYAN}\W ${COLOR_RESET}"
 TYPE_SPEED=30
@@ -32,12 +32,13 @@ cd ..
 
 OPENSEARCH_SDK_DIR="./opensearch-sdk-java" # Replace with your OpenSearch directory
 
-GRADLE_COMMAND="./gradlew helloWorld"
+GRADLE_EXT_COMMAND="./gradlew helloWorld"
 
-p 'osascript -e \"tell application \"Terminal\" to do script \"cd $OPENSEARCH_SDK_DIR; $GRADLE_COMMAND\"\"'
-osascript -e "tell application \"Terminal\" to do script \"cd $OPENSEARCH_SDK_DIR; $GRADLE_COMMAND\""
+p 'osascript -e \"tell application \"Terminal\" to do script \"cd $OPENSEARCH_SDK_DIR; $GRADLE_EXT_COMMAND\"\"'
+osascript -e "tell application \"Terminal\" to do script \"cd $OPENSEARCH_SDK_DIR; $GRADLE_EXT_COMMAND\""
 
 
+wait
 OPENSEARCH_DIR="./OpenSearch" # Replace with your OpenSearch directory
 
 GRADLE_COMMAND="./gradlew run"
@@ -50,7 +51,7 @@ wait
 pe "curl http://localhost:9200"
 
 wait
-curl -XPOST "localhost:9200/_extensions/initialize" -H "Content-Type:application/json" --data @src/main/java/org/opensearch/sdk/sample/helloworld/hello.json
+curl -XPOST "localhost:9200/_extensions/initialize" -H "Content-Type:application/json" --data @./opensearch-sdk-java/src/main/java/org/opensearch/sdk/sample/helloworld/hello.json
 
 wait
 pe "curl -X GET localhost:9200/_extensions/_hello-world-java/hello"
