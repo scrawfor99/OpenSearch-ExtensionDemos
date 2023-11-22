@@ -1,10 +1,10 @@
 #!/bin/bash
 
-. /Users/steecraw/demo-magic/demo-magic.sh -n
+. ./demo-magic/demo-magic.sh -n
 
 DEMO_PROMPT="${GREEN}➜ ${CYAN}\W ${COLOR_RESET}"
 TYPE_SPEED=30
-OS_ROOT="/Users/steecraw/OpenSearch" # Replace with your OpenSearch directory
+OS_ROOT="./OpenSearch" # Replace with your OpenSearch directory
 
 function comment() {
   cmd=$DEMO_COMMENT_COLOR$1$COLOR_RESET
@@ -23,12 +23,12 @@ git reset --hard
 
 comment "# Build and run a Java Extension"
 
-JAVA_EXTENSION="/Users/steecraw/opensearch-sdk-java"
+JAVA_EXTENSION="./opensearch-sdk-java"
 pe 'cd $JAVA_EXTENSION'
 git checkout SDKJavaDemo
 git reset --hard
 
-OPENSEARCH_DIR="/Users/steecraw/opensearch-sdk-java" # Replace with your OpenSearch directory
+OPENSEARCH_DIR="./opensearch-sdk-java" # Replace with your OpenSearch directory
 
 GRADLE_COMMAND="./gradlew helloWorld"
 
@@ -36,7 +36,7 @@ p 'osascript -e \"tell application \"Terminal\" to do script \"cd $OPENSEARCH_DI
 osascript -e "tell application \"Terminal\" to do script \"cd $OPENSEARCH_DIR; $GRADLE_COMMAND\""
 
 
-OPENSEARCH_DIR="/Users/steecraw/OpenSearch" # Replace with your OpenSearch directory
+OPENSEARCH_DIR="./OpenSearch" # Replace with your OpenSearch directory
 
 GRADLE_COMMAND="./gradlew run"
 
