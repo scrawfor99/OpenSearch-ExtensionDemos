@@ -16,7 +16,7 @@ clear
 comment "In this demo: enable extensions, install and run an extension, query it."
 comment "First, enable extensions by modifying gradle/run.gradle, it's an experimental feature."
 pe "cd OpenSearch"
-git apply ../OpenSearch-enable-extensions.patch
+git apply ../4-python-extension-1.patch
 pe "git diff"
 comment "Start OpenSearch"
 pe
