@@ -1,6 +1,8 @@
 #!/bin/bash
+ROOT="$(dirname "$0")"
+cd "$ROOT"
 
-source ~/source/dblock/demo-magic/demo-magic.sh
+source ./demo-magic/demo-magic.sh
 
 DEMO_PROMPT="${GREEN}➜ ${CYAN}\W ${COLOR_RESET}"
 TYPE_SPEED=30
@@ -15,4 +17,5 @@ pe
 
 comment "# Call the REST endpoint:"
 pe "curl http://localhost:9200/_plugins/hello-world-java"
+
 
