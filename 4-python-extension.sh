@@ -29,6 +29,9 @@ pe "cat samples/hello/hello.json | jq"
 pe
 osascript -e "tell application \"Terminal\" to do script \"cd $ROOT/opensearch-sdk-py; poetry run samples/hello/hello.py\""
 
+comment "Here's the OpenSearch we're running:"
+pe "curl http://localhost:9200 | jq"
+
 comment "Install the Python Extension into OpenSearch:"
 pe "curl -s -XPOST \"localhost:9200/_extensions/initialize\" -H \"Content-Type:application/json\" --data @samples/hello/hello.json | jq"
 cd ..
