@@ -1,0 +1,4 @@
+curl http://localhost:9200/_plugins/hello-world-java
+curl http://localhost:9200/_extensions/_hello-world-java/hello
+curl http://localhost:9200/_extensions/_hello-world-py/hello
+
