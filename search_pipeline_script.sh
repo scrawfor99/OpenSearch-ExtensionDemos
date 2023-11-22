@@ -12,12 +12,14 @@ pe 'CLIPBOARD_CONTENT=""'
 # Step 1: Open fresh OpenSearch core
 pe 'cd "$OPENSEARCH_DIR"'
 
+wait
 # Step 2: Find RenameFieldResponseProcessor file and copy it
-pe 'RENAME_FIELD_PROCESSOR="./openSearch/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/RenameFieldResponseProcessor.java"'
+pe 'RENAME_FIELD_PROCESSOR="./modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/RenameFieldResponseProcessor.java"'
 pe 'CLIPBOARD_CONTENT=$(cat "$RENAME_FIELD_PROCESSOR")'
 
+wait
 # Step 3: Make a new file DeleteFieldResponseProcessor
-pe 'NEW_FILE_PATH="./openSearch/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/DeleteFieldResponseProcessor.java"'
+pe 'NEW_FILE_PATH="./modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/DeleteFieldResponseProcessor.java"'
 pe 'touch "$NEW_FILE_PATH"'
 
 # Step 4: Paste clipboard content into the file
@@ -26,13 +28,13 @@ pe 'echo "$CLIPBOARD_CONTENT" > "$NEW_FILE_PATH"'
 pe 'cat $NEW_FILE_PATH'
 
 CLIPBOARD=""
-R_PROCESSOR="./openSearch/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/RenameFieldResponseProcessor.java"
+R_PROCESSOR="./modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/RenameFieldResponseProcessor.java"
 
-D_PROCESSOR="./openSearch/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/DeleteFieldResponseProcessor.java"
-P_COMMONS="./openSearch/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/SearchPipelineCommonModulePlugin.java"
+D_PROCESSOR="./modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/DeleteFieldResponseProcessor.java"
+P_COMMONS="./modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/SearchPipelineCommonModulePlugin.java"
 
-P_COMMONS_INPUT="./P_COMMONS_INPUT.txt"
-D_PROCESSOR_INPUT="./D_PROCESSOR_INPUT.txt"
+P_COMMONS_INPUT="../P_COMMONS_INPUT.txt"
+D_PROCESSOR_INPUT="../D_PROCESSOR_INPUT.txt"
 
 CLIPBOARD=$(cat "$D_PROCESSOR_INPUT")
 > $D_PROCESSOR
@@ -42,15 +44,17 @@ echo "$CLIPBOARD" > "$D_PROCESSOR"
 CLIPBOARD=$(cat "$P_COMMONS_INPUT")
 echo "$CLIPBOARD" > "$P_COMMONS" 
 
+wait
 pe 'diff $D_PROCESSOR $R_PROCESSOR'
 
+wait
 # Replace with the command to start the OpenSearch cluster
-pe 'cd $OPENSEARCH_DIR'
 pe './gradlew localDistro' 
 
 # Create a command to run Gradle
 GRADLE_COMMAND="./gradlew run"
 
+wait
 # Use AppleScript to open a new Terminal window and run the command
 p 'osascript -e \"tell application \"Terminal\" to do script \"cd $OPENSEARCH_DIR; $GRADLE_COMMAND\"\"'
 osascript -e "tell application \"Terminal\" to do script \"cd $OPENSEARCH_DIR; $GRADLE_COMMAND\""

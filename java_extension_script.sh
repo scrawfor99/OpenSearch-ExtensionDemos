@@ -20,6 +20,7 @@ git checkout OSJavaDemo
 git reset --hard
 ./gradlew clean
 ./gradlew localDistro
+cd ..
 
 comment "# Build and run a Java Extension"
 
@@ -27,13 +28,14 @@ JAVA_EXTENSION="./opensearch-sdk-java"
 pe 'cd $JAVA_EXTENSION'
 git checkout SDKJavaDemo
 git reset --hard
+cd ..
 
-OPENSEARCH_DIR="./opensearch-sdk-java" # Replace with your OpenSearch directory
+OPENSEARCH_SDK_DIR="./opensearch-sdk-java" # Replace with your OpenSearch directory
 
 GRADLE_COMMAND="./gradlew helloWorld"
 
-p 'osascript -e \"tell application \"Terminal\" to do script \"cd $OPENSEARCH_DIR; $GRADLE_COMMAND\"\"'
-osascript -e "tell application \"Terminal\" to do script \"cd $OPENSEARCH_DIR; $GRADLE_COMMAND\""
+p 'osascript -e \"tell application \"Terminal\" to do script \"cd $OPENSEARCH_SDK_DIR; $GRADLE_COMMAND\"\"'
+osascript -e "tell application \"Terminal\" to do script \"cd $OPENSEARCH_SDK_DIR; $GRADLE_COMMAND\""
 
 
 OPENSEARCH_DIR="./OpenSearch" # Replace with your OpenSearch directory
