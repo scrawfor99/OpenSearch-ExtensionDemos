@@ -7,7 +7,7 @@ git clone https://github.com/opensearch-project/OpenSearch.git
 
 git clone https://github.com/dblock/opensearch-hello-plugin-java
 
-git clone https://github.com/scrawfor99/opensearch-sdk-java.git
+git clone https://github.com/opensearch-project/opensearch-sdk-java.git
 
 git clone https://github.com/opensearch-project/opensearch-sdk-py.git
 
