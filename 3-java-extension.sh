@@ -1,10 +1,10 @@
 #!/bin/bash
-
-. ./demo-magic.sh -n
+ROOT=$(readlink -f ${0%/*})
+cd "$ROOT"
+source "$ROOT/demo-magic/demo-magic.sh"
 
 DEMO_PROMPT="${GREEN}➜ ${CYAN}\W ${COLOR_RESET}"
 TYPE_SPEED=30
-OS_ROOT="./OpenSearch" # Replace with your OpenSearch directory
 
 function comment() {
   cmd=$DEMO_COMMENT_COLOR$1$COLOR_RESET
@@ -12,45 +12,33 @@ function comment() {
 }
 
 clear
+
+comment "In this demo: enable extensions, install and run an extension, query it."
+comment "First, enable extensions by modifying gradle/run.gradle, it's an experimental feature."
+pe "cd OpenSearch"
+git apply ../3-java-extension-1.patch
+pe "git diff"
+comment "Start OpenSearch"
 pe
-
-comment "# Enable extensions in OpenSearch" 
-pe 'cd $OS_ROOT'
-git checkout OSJavaDemo
-git reset --hard
-./gradlew clean
-./gradlew localDistro
+osascript -e "tell application \"Terminal\" to do script \"cd $ROOT/OpenSearch; ./gradlew run\""
 cd ..
 
-comment "# Build and run a Java Extension"
+comment "Start the Java Extension"
+pe "cd opensearch-sdk-java"
+pe "cat src/main/java/org/opensearch/sdk/sample/helloworld/hello.json | jq"
+pe
+osascript -e "tell application \"Terminal\" to do script \"cd $ROOT/opensearch-sdk-java; ./gradlew helloWorld\""
 
-JAVA_EXTENSION="./opensearch-sdk-java"
-pe 'cd $JAVA_EXTENSION'
-git checkout SDKJavaDemo
-git reset --hard
+comment "Here's the OpenSearch we're running:"
+pe "curl http://localhost:9200 | jq"
+
+comment "Install the Java Extension into OpenSearch:"
+pe "curl -s -XPOST \"localhost:9200/_extensions/initialize\" -H \"Content-Type:application/json\" --data @src/main/java/org/opensearch/sdk/sample/helloworld/hello.json | jq"
 cd ..
 
-OPENSEARCH_SDK_DIR="./opensearch-sdk-java" # Replace with your OpenSearch directory
+comment "Query the REST endpoint:"
+pe "curl http://localhost:9200/_extensions/_hello-world-java/hello"
 
-GRADLE_EXT_COMMAND="./gradlew helloWorld"
-
-p 'osascript -e \"tell application \"Terminal\" to do script \"cd $OPENSEARCH_SDK_DIR; $GRADLE_EXT_COMMAND\"\"'
-osascript -e "tell application \"Terminal\" to do script \"cd $OPENSEARCH_SDK_DIR; $GRADLE_EXT_COMMAND\""
-
-wait
-OPENSEARCH_DIR="./OpenSearch" # Replace with your OpenSearch directory
-
-GRADLE_COMMAND="./gradlew run"
-
-p 'osascript -e \"tell application \"Terminal\" to do script \"cd $OPENSEARCH_DIR; $GRADLE_COMMAND\"\"'
-osascript -e "tell application \"Terminal\" to do script \"cd $OPENSEARCH_DIR; $GRADLE_COMMAND\""
-
-
-wait
-pe "curl http://localhost:9200"
-
-wait
-curl -XPOST "localhost:9200/_extensions/initialize" -H "Content-Type:application/json" --data @./opensearch-sdk-java/src/main/java/org/opensearch/sdk/sample/helloworld/hello.json
-
-wait
-pe "curl -X GET localhost:9200/_extensions/_hello-world-java/hello"
+comment "Cleanup, close the OpenSearch and Extension windows ..."
+cd OpenSearch
+git checkout gradle/run.gradle
