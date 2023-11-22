@@ -1,23 +1,23 @@
 #!/bin/bash
 
-. /Users/steecraw/demo-magic/demo-magic.sh -n
+. ./demo-magic.sh -n
 
 DEMO_PROMPT="${GREEN}➜ ${CYAN}\W ${COLOR_RESET}"
 TYPE_SPEED=30
 
 # Define the variables
-pe 'OPENSEARCH_DIR="/Users/steecraw/OpenSearch"' # Replace with your OpenSearch directory
+pe 'OPENSEARCH_DIR="./OpenSearch"' # Replace with your OpenSearch directory
 
 pe 'CLIPBOARD_CONTENT=""'
 # Step 1: Open fresh OpenSearch core
 pe 'cd "$OPENSEARCH_DIR"'
 
 # Step 2: Find RenameFieldResponseProcessor file and copy it
-pe 'RENAME_FIELD_PROCESSOR="/Users/steecraw/openSearch/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/RenameFieldResponseProcessor.java"'
+pe 'RENAME_FIELD_PROCESSOR="./openSearch/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/RenameFieldResponseProcessor.java"'
 pe 'CLIPBOARD_CONTENT=$(cat "$RENAME_FIELD_PROCESSOR")'
 
 # Step 3: Make a new file DeleteFieldResponseProcessor
-pe 'NEW_FILE_PATH="/Users/steecraw/openSearch/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/DeleteFieldResponseProcessor.java"'
+pe 'NEW_FILE_PATH="./openSearch/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/DeleteFieldResponseProcessor.java"'
 pe 'touch "$NEW_FILE_PATH"'
 
 # Step 4: Paste clipboard content into the file
@@ -26,13 +26,13 @@ pe 'echo "$CLIPBOARD_CONTENT" > "$NEW_FILE_PATH"'
 pe 'cat $NEW_FILE_PATH'
 
 CLIPBOARD=""
-R_PROCESSOR="/Users/steecraw/openSearch/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/RenameFieldResponseProcessor.java"
+R_PROCESSOR="./openSearch/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/RenameFieldResponseProcessor.java"
 
-D_PROCESSOR="/Users/steecraw/openSearch/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/DeleteFieldResponseProcessor.java"
-P_COMMONS="/Users/steecraw/openSearch/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/SearchPipelineCommonModulePlugin.java"
+D_PROCESSOR="./openSearch/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/DeleteFieldResponseProcessor.java"
+P_COMMONS="./openSearch/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/SearchPipelineCommonModulePlugin.java"
 
-P_COMMONS_INPUT="/Users/steecraw/scripts/P_COMMONS_INPUT.txt"
-D_PROCESSOR_INPUT="/Users/steecraw/scripts/D_PROCESSOR_INPUT.txt"
+P_COMMONS_INPUT="./P_COMMONS_INPUT.txt"
+D_PROCESSOR_INPUT="./D_PROCESSOR_INPUT.txt"
 
 CLIPBOARD=$(cat "$D_PROCESSOR_INPUT")
 > $D_PROCESSOR
@@ -87,4 +87,4 @@ wait
 # Step 13: Demo with the second pipeline
 p "curl -XGET "http://localhost:9200/test_index/_search?search_pipeline=my_pipeline2""
 curl -XGET "http://localhost:9200/test_index/_search?search_pipeline=my_pipeline2"
-p ""
+p "":
