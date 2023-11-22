@@ -34,14 +34,8 @@ OPENSEARCH_SDK_DIR="./opensearch-sdk-java" # Replace with your OpenSearch direct
 
 GRADLE_EXT_COMMAND="./gradlew helloWorld"
 
-<<<<<<< HEAD
 p 'osascript -e \"tell application \"Terminal\" to do script \"cd $OPENSEARCH_SDK_DIR; $GRADLE_EXT_COMMAND\"\"'
 osascript -e "tell application \"Terminal\" to do script \"cd $OPENSEARCH_SDK_DIR; $GRADLE_EXT_COMMAND\""
-=======
-p 'osascript -e \"tell application \"Terminal\" to do script \"cd $OPENSEARCH_SDK_DIR; $GRADLE_COMMAND\"\"'
-osascript -e "tell application \"Terminal\" to do script \"cd $OPENSEARCH_SDK_DIR; $GRADLE_COMMAND\""
->>>>>>> 083c0e5 (working pipeline demo)
-
 
 wait
 OPENSEARCH_DIR="./OpenSearch" # Replace with your OpenSearch directory
