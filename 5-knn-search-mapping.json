@@ -1,0 +1,18 @@
+{
+    "settings": {
+        "index.knn": true
+    },
+    "mappings": {
+        "properties": {
+            "values": {
+                "type": "knn_vector",
+                "dimension": 3,
+                "method": {
+                    "name":"hnsw",
+                    "engine": "lucene",
+                    "space_type": "l2"
+                }
+            }
+        }
+    }
+}
