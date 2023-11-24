@@ -5,7 +5,7 @@ ROOT=$(readlink -f ${0%/*})
 source "$ROOT/demo-magic/demo-magic.sh"
 
 DEMO_PROMPT="${GREEN}➜ ${CYAN}\W ${COLOR_RESET}"
-TYPE_SPEED=30
+TYPE_SPEED=50
 
 function comment() {
   cmd=$DEMO_COMMENT_COLOR$1$COLOR_RESET
@@ -17,53 +17,41 @@ clear
 comment "# Add a new search processor and use search pipelines in OpenSearch ($ROOT)..."
 comment "# "
 
-# Define the variables
-pe 'OPENSEARCH_DIR="./OpenSearch"' # Replace with your OpenSearch directory
-pe 'cd $OPENSEARCH_DIR'
-
 # apply patch 
+cd ./OpenSearch
 git apply ../1-search-pipeline-1.patch
 
+# build
 pe './gradlew localDistro' 
 
-# Create a command to run Gradle
-GRADLE_COMMAND="./gradlew run"
+comment "Start OpenSearch"
+osascript -e "tell application \"Terminal\" to do script \"cd $ROOT/OpenSearch; ./gradlew run\""
 
-wait
-# Use AppleScript to open a new Terminal window and run the command
-p 'osascript -e \"tell application \"Terminal\" to do script \"cd $OPENSEARCH_DIR; $GRADLE_COMMAND\"\"'
-osascript -e "tell application \"Terminal\" to do script \"cd $OPENSEARCH_DIR; $GRADLE_COMMAND\""
-
-wait
 # Step 8: Check if the cluster is running
-pe "curl http://localhost:9200"
+comment "Here's the OpenSearch we're running"
+pe "curl -s http://localhost:9200 | jq"
 
-wait
 # Step 9: Index a document
-p "curl -XPUT http://localhost:9200/test_index/_doc/1 -H 'Content-Type: application/json' -d '{"customer": {"name": "John"}, "pii": {"ssn":"123456"}}'"
-curl -XPUT http://localhost:9200/test_index/_doc/1 -H 'Content-Type: application/json' -d '{"customer": {"name": "John"}, "pii": {"ssn":"123456"}}'
+comment "Index a document"
+pe "curl -s -XPUT http://localhost:9200/test_index/_doc/1 -H 'Content-Type: application/json' -d '{\"customer\": {\"name\": \"John\"}, \"pii\": {\"ssn\":\"123456\"}}' | jq"
 
-wait
 # Step 10: Create a new search pipeline
-p "curl -XPUT "http://localhost:9200/_search/pipeline/my_pipeline" -H 'Content-Type: application/json' -d '{"response_processors": [{"rename_field": {"field": "pii","target_field": "hash"}}]}'"
-curl -XPUT "http://localhost:9200/_search/pipeline/my_pipeline" -H 'Content-Type: application/json' -d '{"response_processors": [{"rename_field": {"field": "pii","target_field": "hash"}}]}'
+comment "Create a new search pipeline that renames the PII field"
+pe "curl -s -XPUT "http://localhost:9200/_search/pipeline/rename_field_pipeline" -H 'Content-Type: application/json' -d '{\"response_processors\": [{\"rename_field\": {\"field\": \"pii\",\"target_field\": \"secret\"}}]}' | jq"
 
-wait
 # Step 11: Create a second search pipeline
-p "curl -XPUT "http://localhost:9200/_search/pipeline/my_pipeline2" -H 'Content-Type: application/json' -d '{"response_processors": [{"delete_field": {"field": "pii"}}]}'"
-curl -XPUT "http://localhost:9200/_search/pipeline/my_pipeline2" -H 'Content-Type: application/json' -d '{"response_processors": [{"delete_field": {"field": "pii"}}]}'
+comment "Create a second search pipeline that deletes PII"
+pe "curl -s -XPUT "http://localhost:9200/_search/pipeline/remove_field_pipeline" -H 'Content-Type: application/json' -d '{\"response_processors\": [{\"delete_field\": {\"field\": \"pii\"}}]}' | jq"
 
-wait
 # Step 12: Demo with the first pipeline
-p "curl -XGET "http://localhost:9200/test_index/_search?search_pipeline=my_pipeline""
-curl -XGET "http://localhost:9200/test_index/_search?search_pipeline=my_pipeline"
+comment "Search using the rename pipeline"
+pe "curl -s -XGET "http://localhost:9200/test_index/_search?search_pipeline=rename_field_pipeline" | jq"
 
-wait
 # Step 13: Demo with the second pipeline
-p "curl -XGET "http://localhost:9200/test_index/_search?search_pipeline=my_pipeline2""
-curl -XGET "http://localhost:9200/test_index/_search?search_pipeline=my_pipeline2"
-p ""
+comment "Search using the remove pipeline"
+pe "curl -s -XGET "http://localhost:9200/test_index/_search?search_pipeline=remove_field_pipeline" | jq"
 
-#clean up 
+# clean up 
+comment "Cleanup, manually close the OpenSearch window ..."
 git apply -R ../1-search-pipeline-1.patch
-./gradlew clean 
+cd ..
