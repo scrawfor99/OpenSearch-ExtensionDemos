@@ -1,9 +1,9 @@
 diff --git a/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/DeleteFieldResponseProcessor.java b/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/DeleteFieldResponseProcessor.java
-index 3eca21e2fde..c96ddbc23fc 100644
---- a/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/DeleteFieldResponseProcessor.java
+new file mode 100644
+index 00000000000..c96ddbc23fc
+--- /dev/null
 +++ b/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/DeleteFieldResponseProcessor.java
-@@ -1,2 +1,139 @@
--package org.opensearch.search.pipeline.common;public class DeleteFieldResponseProcessor {
+@@ -0,0 +1,139 @@
 +/*
 + * SPDX-License-Identifier: Apache-2.0
 + *
@@ -142,7 +142,7 @@ index 3eca21e2fde..c96ddbc23fc 100644
 +			return new DeleteFieldResponseProcessor(tag, description, ignoreFailure, field, ignoreMissing);
 +		}
 +	}
- }
++}
 diff --git a/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/SearchPipelineCommonModulePlugin.java b/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/SearchPipelineCommonModulePlugin.java
 index 49681b80fde..6703ff0f2e7 100644
 --- a/modules/search-pipeline-common/src/main/java/org/opensearch/search/pipeline/common/SearchPipelineCommonModulePlugin.java
