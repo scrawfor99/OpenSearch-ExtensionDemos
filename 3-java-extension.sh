@@ -25,12 +25,12 @@ cd ..
 
 comment "Start the Java Extension"
 pe "cd opensearch-sdk-java"
-pe "cat src/main/java/org/opensearch/sdk/sample/helloworld/hello.json | jq"
+pe "cat src/main/java/org/opensearch/sdk/sample/helloworld/hello.json"
 pe
 osascript -e "tell application \"Terminal\" to do script \"cd $ROOT/opensearch-sdk-java; ./gradlew helloWorld\""
 
 comment "Here's the OpenSearch we're running:"
-pe "curl http://localhost:9200 | jq"
+pe "curl http://localhost:9200"
 
 comment "Install the Java Extension into OpenSearch:"
 pe "curl -s -XPOST \"localhost:9200/_extensions/initialize\" -H \"Content-Type:application/json\" --data @src/main/java/org/opensearch/sdk/sample/helloworld/hello.json | jq"
@@ -39,6 +39,7 @@ cd ..
 comment "Query the REST endpoint:"
 pe "curl http://localhost:9200/_extensions/_hello-world-java/hello"
 
+pe ""
 comment "Cleanup, close the OpenSearch and Extension windows ..."
 cd OpenSearch
 git checkout gradle/run.gradle

@@ -65,5 +65,5 @@ curl -XGET "http://localhost:9200/test_index/_search?search_pipeline=my_pipeline
 p ""
 
 #clean up 
-git reset --hard origin 
+git apply -R ../1-search-pipeline-1.patch
 ./gradlew clean 
