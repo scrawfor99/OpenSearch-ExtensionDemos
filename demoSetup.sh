@@ -14,3 +14,7 @@ git clone https://github.com/opensearch-project/opensearch-sdk-py.git
 cd OpenSearch
 ./gradlew localDistro
 cd ..
+
+cd opensearch-sdk-py
+poetry install
+cd ..
