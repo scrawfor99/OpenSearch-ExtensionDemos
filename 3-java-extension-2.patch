@@ -1,0 +1,16 @@
+diff --git a/src/main/java/org/opensearch/sdk/sample/helloworld/rest/RestHelloAction.java b/src/main/java/org/opensearch/sdk/sample/helloworld/rest/RestHelloAction.java
+index 2e8a2a8..ebfee3f 100644
+--- a/src/main/java/org/opensearch/sdk/sample/helloworld/rest/RestHelloAction.java
++++ b/src/main/java/org/opensearch/sdk/sample/helloworld/rest/RestHelloAction.java
+@@ -92,10 +92,7 @@ public class RestHelloAction extends BaseExtensionRestHandler {
+     }
+ 
+     private Function<RestRequest, RestResponse> handleGetRequest = (request) -> {
+-        String worldNameWithRandomAdjective = worldAdjectives.isEmpty()
+-            ? worldName
+-            : String.join(" ", worldAdjectives.get(rand.nextInt(worldAdjectives.size())), worldName);
+-        return new ExtensionRestResponse(request, OK, String.format(GREETING, worldNameWithRandomAdjective));
++        return new ExtensionRestResponse(request, OK, "Hello from Java 👋\n");
+     };
+ 
+     private Function<RestRequest, RestResponse> handlePostRequest = (request) -> {

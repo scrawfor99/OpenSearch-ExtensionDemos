@@ -26,6 +26,7 @@ comment "Install the plugin into OpenSearch:"
 pe "cd ../OpenSearch"
 pe "./distribution/archives/darwin-arm64-tar/build/install/opensearch-3.0.0-SNAPSHOT/bin/opensearch-plugin install file:///$ROOT/k-NN/build/distributions/opensearch-knn-3.0.0.0-SNAPSHOT.zip"
 
+wait
 comment "Start OpenSearch:"
 pe
 osascript -e "tell application \"Terminal\" to do script \"cd $ROOT/OpenSearch; ./gradlew run\""
