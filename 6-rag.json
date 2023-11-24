@@ -1,0 +1,26 @@
+curl "http://localhost:9200/_plugins/_ml/memory/conversation/42"
+
+{
+    "interactions": [
+        {
+            "conversation_id": "qo3v_i43",
+            "interaction_id": "q498-nh4wo9q",
+            "create_time": "2023-04-22 10:24:21.21637",
+            "input": "Who created them",
+            "prompt_template": "Answer the question using the documents",
+            "response": "Jim Gray created the sort benchmarks",
+            "origin": "retrieval_augmented_generation",
+            "additional_info": []
+        },
+        {
+            "conversation_id": "qo3v_i43",
+            "interaction_id": "q498-nh4w54wuw",
+            "create_time": "2023-04-22 10:21:21.21637",
+            "input": "What are the sort benchmarks?",
+            "prompt_template": "Answer the question using the documents",
+            "response": "The sort benchmarks include GraySort, CloudSort, MinuteSort, JouleSort, PennySort, TeraByte Sort, and Datamation Sort.",
+            "origin": "retrieval_augmented_generation",
+            "additional_info": []
+        }
+    ]
+}
