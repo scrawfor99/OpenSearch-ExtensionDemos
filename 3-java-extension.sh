@@ -25,6 +25,7 @@ cd ..
 
 comment "Start the Java Extension"
 pe "cd opensearch-sdk-java"
+git apply ../3-java-extension-2.patch
 pe "cat src/main/java/org/opensearch/sdk/sample/helloworld/hello.json"
 pe
 osascript -e "tell application \"Terminal\" to do script \"cd $ROOT/opensearch-sdk-java; ./gradlew helloWorld\""
@@ -39,7 +40,12 @@ cd ..
 comment "Query the REST endpoint:"
 pe "curl http://localhost:9200/_extensions/_hello-world-java/hello"
 
-pe ""
+wait
 comment "Cleanup, close the OpenSearch and Extension windows ..."
+cd opensearch-sdk-java
+git apply -R ../3-java-extension-2.patch
+cd ..
+
 cd OpenSearch
 git checkout gradle/run.gradle
+cd ..
