@@ -4,7 +4,7 @@ cd "$ROOT"
 source "$ROOT/demo-magic/demo-magic.sh"
 
 DEMO_PROMPT="${GREEN}➜ ${CYAN}\W ${COLOR_RESET}"
-TYPE_SPEED=30
+TYPE_SPEED=50
 
 function comment() {
   cmd=$DEMO_COMMENT_COLOR$1$COLOR_RESET
@@ -27,8 +27,10 @@ pe "cd ../OpenSearch"
 pe "./distribution/archives/darwin-arm64-tar/build/install/opensearch-3.0.0-SNAPSHOT/bin/opensearch-plugin install file:///$ROOT/opensearch-hello-plugin-java/build/distributions/hello.zip"
 
 comment "Start OpenSearch:"
-pe
 osascript -e "tell application \"Terminal\" to do script \"cd $ROOT/OpenSearch; ./gradlew run\""
+
+comment "Here's the OpenSearch we're running:"
+pe "curl http://localhost:9200 | jq"
 
 comment "Call the REST endpoint:"
 pe "curl http://localhost:9200/_plugins/hello-world-java"

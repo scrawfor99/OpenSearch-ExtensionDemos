@@ -4,7 +4,7 @@ cd "$ROOT"
 source "$ROOT/demo-magic/demo-magic.sh"
 
 DEMO_PROMPT="${GREEN}➜ ${CYAN}\W ${COLOR_RESET}"
-TYPE_SPEED=30
+TYPE_SPEED=50
 
 function comment() {
   cmd=$DEMO_COMMENT_COLOR$1$COLOR_RESET
