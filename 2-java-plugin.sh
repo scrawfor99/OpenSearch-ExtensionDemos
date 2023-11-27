@@ -24,6 +24,7 @@ pe "find . -name *.zip"
 
 comment "Install the plugin into OpenSearch:"
 pe "cd ../OpenSearch"
+pe "./gradlew localDistro"
 pe "./distribution/archives/darwin-arm64-tar/build/install/opensearch-3.0.0-SNAPSHOT/bin/opensearch-plugin install file:///$ROOT/opensearch-hello-plugin-java/build/distributions/hello.zip"
 
 wait
